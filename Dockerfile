@@ -10,6 +10,9 @@ RUN npm run build
 FROM node:20-alpine
 WORKDIR /app
 
+# Install build tools needed for native addons (better-sqlite3)
+RUN apk add --no-cache python3 make g++
+
 # Set production environment variables
 ENV NODE_ENV=production
 ENV PORT=4100
