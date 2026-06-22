@@ -77,6 +77,7 @@ export default function EpubReaderPage() {
   const [showTtsPlayer, setShowTtsPlayer] = useState(false);
   const saveTimer = useRef(null);
   const touchStartX = useRef(null);
+  const currentCfiRef = useRef(null);
 
   const [selectionMenu, setSelectionMenu] = useState(null);
 
@@ -87,9 +88,18 @@ export default function EpubReaderPage() {
 
   useEffect(() => {
     if (renditionRef.current) {
+      const currentCfi = currentCfiRef.current;
       renditionRef.current.resize();
+      if (currentCfi) {
+        renditionRef.current.display(currentCfi).catch(() => {});
+      }
       const timer = setTimeout(() => {
-        renditionRef.current?.resize();
+        if (renditionRef.current) {
+          renditionRef.current.resize();
+          if (currentCfi) {
+            renditionRef.current.display(currentCfi).catch(() => {});
+          }
+        }
       }, 50);
       return () => clearTimeout(timer);
     }
@@ -319,6 +329,7 @@ export default function EpubReaderPage() {
       setProgress(pct);
       
       if (location && location.start) {
+        currentCfiRef.current = location.start.cfi;
         setCurrentHref(location.start.href);
         if (location.start.cfi) {
           book.getRange(location.start.cfi).then(range => {
@@ -467,7 +478,34 @@ export default function EpubReaderPage() {
   }, [id, navigate]);
 
   useEffect(() => {
-    if (renditionRef.current) applyTheme(renditionRef.current, theme, fontSizeIdx);
+    let resizeTimer;
+    function handleResize() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (renditionRef.current) {
+          const currentCfi = currentCfiRef.current;
+          renditionRef.current.resize();
+          if (currentCfi) {
+            renditionRef.current.display(currentCfi).catch(() => {});
+          }
+        }
+      }, 150);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (renditionRef.current) {
+      const currentCfi = currentCfiRef.current;
+      applyTheme(renditionRef.current, theme, fontSizeIdx);
+      if (currentCfi) {
+        renditionRef.current.display(currentCfi).catch(() => {});
+      }
+    }
   }, [theme, fontSizeIdx]);
 
   function applyTheme(rendition, themeName, sizeIdx) {
