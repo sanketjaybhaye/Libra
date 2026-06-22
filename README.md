@@ -45,14 +45,29 @@
 
 Get your personal server running in under a minute:
 
-### 1. Start the Server
+### 🐋 Option A: Run with Docker (Recommended)
+
+If you have Docker and Docker Compose installed, run this single command from the project root:
+
+```bash
+docker compose up -d --build
+```
+
+*   💾 **Persistence:** Database records and uploaded books are mapped and saved locally under `server/data/` and `server/uploads/` on your host machine.
+*   🔌 **Access:** The application runs on port `4100` (`http://localhost:4100`).
+
+---
+
+### 💻 Option B: Run Locally (Node/NPM)
+
+#### 1. Start the Server
 ```bash
 cd server
 npm install
 npm start
 ```
 
-### 2. Access the Dashboard
+#### 2. Access the Dashboard
 On first run, the server prints local and LAN addresses:
 ```text
 Libra is running.

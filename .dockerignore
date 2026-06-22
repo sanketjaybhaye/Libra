@@ -1,0 +1,11 @@
+node_modules
+server/node_modules
+web/node_modules
+server/data
+server/uploads
+public
+.git
+.gitignore
+README.md
+Dockerfile
+docker-compose.yml

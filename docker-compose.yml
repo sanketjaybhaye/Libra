@@ -1,0 +1,15 @@
+services:
+  libra:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: libra
+    restart: unless-stopped
+    ports:
+      - "4100:4100"
+    environment:
+      - PORT=4100
+      - NODE_ENV=production
+    volumes:
+      - ./server/data:/app/server/data
+      - ./server/uploads:/app/server/uploads
