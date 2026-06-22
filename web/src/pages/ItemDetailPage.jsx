@@ -450,11 +450,11 @@ export default function ItemDetailPage() {
                   <span>{item.my_status === 'reading' ? 'Continue reading' : 'Start reading'}</span>
                 </button>
               )}
-              <button className={`btn-ghost ${item.is_favorite ? 'is-favorited' : ''}`} onClick={toggleFavorite}>
+              <button className={`btn-ghost btn-favorite ${item.is_favorite ? 'is-favorited' : ''}`} onClick={toggleFavorite}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill={item.is_favorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 <span>{item.is_favorite ? 'Favorited' : 'Favorite'}</span>
               </button>
-              <div className="dropdown-container" ref={shelvesDropdownRef}>
+              <div className="dropdown-container btn-shelves" ref={shelvesDropdownRef}>
                 <button className="btn-ghost" onClick={() => setShowShelvesDropdown(!showShelvesDropdown)}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5A2.5 2.5 0 0 1 6.5 2.5H20M12 6v6m-3-3h6"/></svg>
                   <span>Shelves</span>
@@ -474,23 +474,23 @@ export default function ItemDetailPage() {
                   </div>
                 )}
               </div>
-              <a className="btn-ghost" href={api.fileUrl(id)} download>
+              <a className="btn-ghost btn-download" href={api.fileUrl(id)} download>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px', display: 'inline-block', verticalAlign: 'middle' }}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                 <span>Download</span>
               </a>
               {highlights.length > 0 && (
-                <button className="btn-ghost" onClick={handleNotionSync} disabled={syncing}>
+                <button className="btn-ghost btn-notion-sync" onClick={handleNotionSync} disabled={syncing}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                   <span>{syncing ? 'Syncing...' : 'Sync to Notion'}</span>
                 </button>
               )}
               {highlights.length > 0 && (
-                <button className="btn-ghost" onClick={handleExportMarkdown}>
+                <button className="btn-ghost btn-export-notes" onClick={handleExportMarkdown}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
                   <span>Export Notes</span>
                 </button>
               )}
-              <button className="btn-ghost" onClick={() => setEditing(true)}>
+              <button className="btn-ghost btn-edit" onClick={() => setEditing(true)}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                 <span>Edit</span>
               </button>

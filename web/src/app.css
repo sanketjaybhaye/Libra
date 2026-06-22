@@ -3392,6 +3392,112 @@
   margin: 0;
   color: var(--text-primary);
 }
+
+/* Base class configurations for Goals, Badges, and Activity Log */
+.goals-badges-section {
+  grid-column: span 2;
+  display: grid !important;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 32px;
+}
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.gauges-flex-row {
+  display: flex;
+  justify-content: space-around;
+  gap: 16px;
+}
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 16px;
+}
+.recent-sessions-section {
+  grid-column: span 2;
+  margin-top: 24px;
+}
+.recent-sessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.session-log-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-soft);
+  transition: all 0.2s ease;
+  cursor: default;
+}
+.session-log-row:hover {
+  transform: translateX(4px);
+}
+.session-log-cover {
+  width: 36px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-spine);
+}
+.session-log-cover-fallback {
+  width: 36px;
+  height: 54px;
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+.session-log-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.session-log-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+.session-log-date {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  text-align: left;
+}
+.session-log-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.session-log-pages {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 600;
+}
+.session-log-focus {
+  font-size: 12.5px;
+  color: #7c9885;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
 .section-subtitle {
   font-size: 13px;
   color: var(--text-tertiary);
@@ -3795,10 +3901,160 @@
     text-align: center;
     padding: 7px 8px;
   }
+
+  /* Analytics Page Responsive Overrides (880px) */
+  .goals-badges-section {
+    grid-column: span 2 !important;
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .recent-sessions-section {
+    grid-column: span 2 !important;
+  }
 }
 
 /* Smartphone Reader UX Polishes */
 @media (max-width: 600px) {
+  /* Mobile insights summary overrides */
+  .analytics-summary-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .analytics-card {
+    padding: 16px !important;
+    gap: 12px !important;
+  }
+  .streak-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .streak-meta {
+    margin-left: 0 !important;
+    margin-top: 4px !important;
+    border-top: 1px dashed var(--border-soft);
+    width: 100%;
+    padding-top: 8px;
+    font-size: 11px !important;
+    text-align: left;
+  }
+  .stat-summary-card {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+    justify-content: stretch !important;
+    padding: 16px 12px !important;
+  }
+  .stat-summary-card .stat-summary-divider {
+    display: none !important;
+  }
+  /* Make the third item (Reading Now) span both columns in Card 2 */
+  .stat-summary-card .stat-summary-row:nth-child(5) {
+    grid-column: span 2 !important;
+    border-top: 1px solid var(--border-soft);
+    padding-top: 12px;
+    width: 100%;
+  }
+  /* Card 3 (2 items) has no child(5) but we make it span 1 column for each item */
+  .stat-summary-card:last-of-type .stat-summary-row {
+    grid-column: span 1 !important;
+    border-top: none !important;
+    padding-top: 0 !important;
+  }
+  .stat-summary-num {
+    font-size: 22px !important;
+  }
+  .stat-summary-lbl {
+    font-size: 9px !important;
+    margin-top: 4px !important;
+  }
+  .goals-badges-section {
+    grid-column: auto !important;
+    padding: 16px !important;
+  }
+  .recent-sessions-section {
+    grid-column: auto !important;
+    padding: 16px !important;
+  }
+  .section-header-row {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: stretch !important;
+  }
+  .section-header-row button {
+    align-self: flex-start !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .gauges-flex-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 24px !important;
+  }
+  .radial-gauge-container {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid var(--border-soft) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 16px 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .badges-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+  .badge-card {
+    padding: 12px 8px !important;
+  }
+  .badge-icon-wrapper {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .selected-day-details {
+    padding: 10px 14px !important;
+    margin-top: 12px !important;
+  }
+  .hourly-chart-container {
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    padding: 16px 12px !important;
+  }
+  .hourly-chart-container svg {
+    min-width: 450px !important;
+    height: 120px !important;
+  }
+  .session-log-row {
+    padding: 10px 12px !important;
+    gap: 10px !important;
+  }
+  .session-log-title {
+    font-size: 13px !important;
+  }
+  .session-log-date {
+    font-size: 11px !important;
+  }
+  .session-log-pages {
+    font-size: 13px !important;
+  }
+  .session-log-focus {
+    font-size: 11px !important;
+  }
+  /* Calendar Heatmap Custom thin Scrollbar */
+  .heatmap-scrollable::-webkit-scrollbar {
+    height: 5px !important;
+  }
+  .heatmap-scrollable::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 3px !important;
+  }
+  .heatmap-scrollable::-webkit-scrollbar-thumb {
+    background: var(--border-soft) !important;
+    border-radius: 3px !important;
+  }
+  .heatmap-scrollable::-webkit-scrollbar-thumb:hover {
+    background: var(--accent) !important;
+  }
+
   /* Reader topbar responsive positioning and spacing */
   .reader-topbar {
     left: 10px !important;
@@ -4081,6 +4337,79 @@
     scroll-snap-align: start !important;
     padding: 16px !important;
   }
+
+  /* Detail/Complete Page Smartphone Polishes */
+  .detail-actions .btn-notion-sync,
+  .detail-actions .btn-export-notes {
+    grid-column: span 2 !important;
+    height: 40px !important;
+    font-size: 13px !important;
+  }
+  .detail-comments {
+    padding: 16px !important;
+    margin-top: 24px !important;
+  }
+  .comment-form {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+  .comment-form input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .comment-form button {
+    width: 100% !important;
+  }
+  .detail-highlights {
+    margin-top: 24px !important;
+    padding-top: 24px !important;
+  }
+  .highlights-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+  .highlights-search-box {
+    width: 100% !important;
+  }
+  .highlights-color-selector {
+    justify-content: flex-start !important;
+  }
+  .highlights-list {
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding-right: 0 !important;
+  }
+  .detail-danger-zone {
+    padding: 16px !important;
+    margin-top: 24px !important;
+  }
+  .confirm-delete-actions {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .confirm-delete-actions button {
+    width: 100% !important;
+  }
+  .detail-actions .dropdown-container .shelves-dropdown {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90% !important;
+    max-width: 320px !important;
+    min-width: 0 !important;
+    transform-origin: center !important;
+    box-shadow: var(--shadow-xl) !important;
+    z-index: 1100 !important;
+    animation: detailMenuPopMobile 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
+}
+
+@keyframes detailMenuPopMobile {
+  0% { opacity: 0; transform: translate(-50%, -46%) scale(0.95); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 /* Custom Dropdown selector styling */
