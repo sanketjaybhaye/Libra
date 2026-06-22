@@ -1,123 +1,127 @@
-# Libra — your shelf, on your network
+# 📚 Libra — Your Personal Library, On Your Network
 
-A self-hosted library for e-books and comics. Upload EPUB, PDF, CBZ, or CBR files; Libra
-reads titles, authors, series, and cover art straight out of the files. Read everything
-in the browser, track progress per page or percent, and share one library across multiple
-accounts on your home network — each person gets their own reading progress and favorites.
+<p align="center">
+  <img src="assets/banner.png" alt="Libra Banner" width="100%" style="border-radius: 8px; margin: 20px 0;" />
+</p>
 
-## What's inside
+<p align="center">
+  <strong>A premium, self-hosted, lightweight library and reader for e-books and comics.</strong>
+  <br />
+  <em>Upload EPUB, PDF, CBZ, or CBR files, extract metadata automatically, track reading progress, and sync notes to Notion.</em>
+</p>
 
-- **Backend**: Node.js + Express + SQLite (via `better-sqlite3`), single process, no external
-  database to configure.
-- **Frontend**: React (Vite), built to static files and served by the same Node process —
-  one server, one port, nothing else to run.
-- **Readers**: EPUB (paginated, with themes and font sizing), PDF (canvas-rendered), and
-  CBZ/CBR (page-by-page comic viewer).
-- **Accounts**: the first person to register becomes the admin. Everyone after that is a
-  regular user. Progress and favorites are private to each account; the library itself is shared.
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-18%2B-blue?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js version" />
+  <img src="https://img.shields.io/badge/React-18%2B-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React version" />
+  <img src="https://img.shields.io/badge/SQLite-WAL_Mode-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
+</p>
 
-## Requirements
+---
 
-- Node.js 18 or newer (20+ recommended) on the machine that will run the server.
-- That's it. No Docker, no separate database server.
+## ✨ Key Features
 
-## Setup
+- 📖 **All-in-One Readers:** Paginated EPUB reader with customizable themes and font sizes, high-performance canvas-rendered PDF viewer, and page-by-page CBZ/CBR comic viewer.
+- ⚡ **Zero Configuration:** Powered by SQLite in WAL mode. Single-process server served on a single port. No complex database engines to set up.
+- 👥 **Multi-User Support:** Share your library across your home network. Each user gets isolated reading progress, history tracking, daily goals, and favorite lists.
+- 🚀 **Automatic Metadata:** Extracts title, author, description, cover image, and series metadata directly from EPUB files on upload. Supports web metadata lookup if local files are missing metadata.
+- 🔄 **Notion Sync Integration:** Export your reading highlights and annotations directly to a personal Notion database with one click.
+- 📱 **Premium Mobile UX:** Responsive layouts optimized for smartphones, including swipe page turns, floating mini-timers, scroll-constrained highlights search/filter, and touch-friendly avatar overlays.
 
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology | Description |
+| :--- | :--- | :--- |
+| **Backend** | Node.js + Express | Single-process runtime, light and fast. |
+| **Database** | SQLite (`node:sqlite`) | Embedded database with zero server config, WAL enabled. |
+| **Frontend** | React + Vite | Clean, single-page app served statically by the Node server. |
+| **Styling** | Vanilla CSS | Bespoke, premium dark-mode theme utilizing CSS custom properties. |
+
+---
+
+## 🚀 Quick Start
+
+Get your personal server running in under a minute:
+
+### 1. Start the Server
 ```bash
 cd server
 npm install
 npm start
 ```
 
-On first run the server prints both a local and a LAN address:
-
-```
+### 2. Access the Dashboard
+On first run, the server prints local and LAN addresses:
+```text
 Libra is running.
   Local:   http://localhost:4100
   Network: http://192.168.1.42:4100
 ```
 
-Open the **Network** address from any device on the same Wi-Fi/LAN to use Libra from your
-phone, tablet, or another computer. The first account you create becomes the admin.
+> [!TIP]
+> Open the **Network** address from your phone, tablet, or another computer on the same Wi-Fi/LAN to read from anywhere! The first account created automatically becomes the administrator.
 
-To change the port, set `PORT` before starting:
-
+To run the server on a custom port, set the `PORT` environment variable before running:
 ```bash
 PORT=8080 npm start
 ```
 
-### A note on `npm install` and native modules
+---
 
-`better-sqlite3` compiles a small native binary during install. On almost every normal
-machine with Node.js installed, `npm install` handles this automatically — nothing extra
-to do. If you're on a locked-down or offline machine and the install fails while trying to
-fetch Node headers, try:
+## 🕒 Running Permanently
 
-```bash
-npm install --nodedir=/usr
-```
-
-(pointing at wherever your system's Node headers actually live), or install build tools
-(`python3`, `make`, a C compiler) and retry. This is rare — most setups just work.
-
-## Running it permanently (so it survives reboots/closed terminals)
-
-The simplest option is a process manager like `pm2`:
+To run Libra persistently in the background (surviving terminal closures and system reboots), use a process manager like **PM2**:
 
 ```bash
+# Install PM2 globally
 npm install -g pm2
+
+# Start the server
 cd server
 pm2 start src/index.js --name libra
+
+# Save state and configure boot startup
 pm2 save
-pm2 startup   # follow the printed instructions to enable on boot
+pm2 startup
 ```
 
-Or use a systemd service, or just run it in a `screen`/`tmux` session — whatever you'd
-normally use to keep a personal server alive.
+---
 
-## Rebuilding the frontend
+## 💻 Frontend Development & UI Customization
 
-The `public/` folder at the project root is the built frontend the server serves. If you
-want to make changes to the UI:
+The `public/` directory at the project root holds the built client assets served by Node. If you want to modify or customize the UI layout:
 
 ```bash
+# 1. Start backend in one terminal
+cd server
+npm start
+
+# 2. Open another terminal and start web dev environment
 cd web
 npm install
-npm run dev      # local dev server with hot reload, proxies API calls to :4100
-npm run build    # builds into ../public, which the Node server serves
+npm run dev      # Launch dev server with hot reload and API proxying
+
+# 3. Rebuild static assets once changes are made
+npm run build    # Compiles assets directly into the server's public folder
 ```
 
-You'll need the backend (`cd server && npm start`) running in another terminal for `npm run
-dev` to have something to talk to.
+---
 
-## How metadata is found
+## 📂 Storage & Backup Directories
 
-- **EPUB**: reads the book's internal `content.opf` for title, author, description, cover
-  image, and Calibre-style series metadata if present.
-- **PDF**: reads the embedded document title/author and page count.
-- **CBZ/CBR**: uses the first image inside the archive as the cover and counts image
-  files as pages — no metadata file needed.
+All uploads and database records are kept in simple, accessible folders. Back up these directories to secure your library:
 
-If a file doesn't carry good metadata, the title falls back to the filename, and you can
-always fix it afterward from the item's "Edit details" button — title, author, series,
-series number, and tags are all editable, and tags double as a free-form shelf filter.
+- 💾 **`server/data/libra.sqlite`** — Database storing user profiles, reading progress, shelves, highlights, comments, and daily goals.
+- 📚 **`server/uploads/books/`** — Folder containing original uploaded books and comic files.
+- 🖼️ **`server/uploads/covers/`** — Extracted cover image caches.
 
-## Where things are stored
+---
 
-- `server/data/libra.sqlite` — all library metadata, accounts, progress, and favorites.
-- `server/uploads/books/` — the original files you upload.
-- `server/uploads/covers/` — extracted cover images.
+## 📝 Limitations & Notes
 
-Back up the `server/data` and `server/uploads` folders together to preserve your whole
-library, including reading progress.
-
-## Limitations to know about
-
-- Upload size is capped at 1 GB per file (generous for scanned PDFs and most comics —
-  raise the limit in `server/src/routes/items.js` if you need more).
-- MOBI files can be uploaded and stored, but there's no in-browser MOBI reader yet —
-  they're downloadable, not readable in-app. Converting MOBI to EPUB beforehand (with a
-  tool like Calibre) gets you the full reading experience.
-- There's no automatic folder-watching/import — files come in through the upload screen
-  (drag-and-drop, multiple at once). This was a deliberate simplicity trade-off; ask if
-  you'd like folder scanning added later.
+> [!NOTE]
+> - **File Limits:** Default upload size is capped at 1 GB per file (ideal for heavy scanned PDFs and graphic novels). This can be adjusted in [items.js](file:///c:/Users/Sanket/Documents/Bucket%20List/libra/server/src/routes/items.js).
+> - **MOBI Format:** MOBI files can be uploaded and downloaded, but cannot be read in the browser yet. Convert MOBI files to EPUB (e.g. using Calibre) for full in-browser reading.
+> - **Import Pipeline:** Files are imported through drag-and-drop on the upload screen (supports bulk upload). There is no auto-folder scanning by default to keep the storage layer simple and predictable.
