@@ -1,0 +1,12 @@
+node_modules/
+server/data/*.sqlite
+server/data/*.sqlite-wal
+server/data/*.sqlite-shm
+server/data/.jwt-secret
+server/uploads/books/*
+server/uploads/covers/*
+!server/uploads/books/.gitkeep
+!server/uploads/covers/.gitkeep
+web/dist/
+*.log
+.DS_Store

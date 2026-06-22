@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Rounded dark background matching sandstone/ink theme -->
+  <rect width="48" height="48" rx="12" fill="#161b24" />
+  
+  <!-- Subtle inner accent border -->
+  <rect x="1" y="1" width="46" height="46" rx="11" fill="none" stroke="#c98a3e" stroke-width="1.5" stroke-opacity="0.2" />
+  
+  <!-- Left Page (Shaded Amber) -->
+  <path d="M24 37c-4.5-3.5-10.5-3.5-15-3.5V12c4.5 0 10.5 0 15 3.5Z" fill="#c98a3e" />
+  
+  <!-- Right Page (Bright Amber) -->
+  <path d="M24 37c4.5-3.5 10.5-3.5 15-3.5V12c-4.5 0-10.5 0-15 3.5Z" fill="#d9a05e" />
+  
+  <!-- Book spine divider -->
+  <path d="M24 15.5v21.5" stroke="#161b24" stroke-width="1.5" stroke-linecap="round" />
+  
+  <!-- Elegant Sage Green bookmark ribbon hanging from the page -->
+  <path d="M27.5 15v13.5l-2-1.5-2 1.5V15" fill="#7c9885" />
+</svg>
