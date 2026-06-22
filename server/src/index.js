@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import os from 'os';
 import { fileURLToPath } from 'url';
+import compression from 'compression';
 
 import authRoutes from './routes/auth.js';
 import itemRoutes from './routes/items.js';
@@ -17,6 +18,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 4100;
 
 const app = express();
+app.use(compression());
 app.use(express.json({ limit: '5mb' }));
 app.use(cookieParser());
 
@@ -29,9 +31,20 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/notion', notionRoutes);
 app.use('/api/annotations', annotationsRoutes);
 
-// Serve the built frontend
+// Serve the built frontend with compression and aggressive browser caching
 const PUBLIC_DIR = path.join(__dirname, '..', '..', 'public');
-app.use(express.static(PUBLIC_DIR));
+app.use(express.static(PUBLIC_DIR, {
+  maxAge: '1y',
+  setHeaders: (res, filePath) => {
+    // Vite compiles all static assets (JS, CSS, SVGs) into the 'assets' subfolder with content hashes
+    if (filePath.replace(/\\/g, '/').includes('/assets/')) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else {
+      // index.html or other static files should check for modifications instantly
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+    }
+  }
+}));
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api/')) return next();
   res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
