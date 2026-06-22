@@ -1,4 +1,4 @@
-import { DatabaseSync } from 'node:sqlite';
+import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
@@ -11,7 +11,7 @@ if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(path.join(UPLOADS_DIR, 'books'))) fs.mkdirSync(path.join(UPLOADS_DIR, 'books'), { recursive: true });
 if (!fs.existsSync(path.join(UPLOADS_DIR, 'covers'))) fs.mkdirSync(path.join(UPLOADS_DIR, 'covers'), { recursive: true });
 
-const db = new DatabaseSync(path.join(DATA_DIR, 'libra.sqlite'));
+const db = new Database(path.join(DATA_DIR, 'libra.sqlite'));
 db.exec('PRAGMA journal_mode = WAL');
 db.exec('PRAGMA foreign_keys = ON');
 
